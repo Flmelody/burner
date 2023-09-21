@@ -34,7 +34,9 @@ import javax.lang.model.element.TypeElement;
   AnnotationConst.CONFIGURATION,
   AnnotationConst.PROTOTYPE,
   AnnotationConst.POST_CONSTRUCT,
-  AnnotationConst.PRE_DESTROY
+  AnnotationConst.PRE_DESTROY,
+  AnnotationConst.SINGLETON,
+  AnnotationConst.INJECT
 })
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)

@@ -25,4 +25,6 @@ public interface AnnotationConst {
   String CONFIGURATION = "org.flmelody.burner.core.annotation.Configuration";
   String POST_CONSTRUCT = "org.flmelody.burner.core.annotation.PostConstruct";
   String PRE_DESTROY = "org.flmelody.burner.core.annotation.PreDestroy";
+  String SINGLETON = "jakarta.inject.Singleton";
+  String INJECT = "jakarta.inject.Inject";
 }
