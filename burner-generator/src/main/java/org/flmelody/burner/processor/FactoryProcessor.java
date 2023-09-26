@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.flmelody.burner.context;
+package org.flmelody.burner.processor;
 
 import com.google.auto.service.AutoService;
 import java.util.Set;

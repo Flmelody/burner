@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-package org.flmelody.burner.context;
+package org.flmelody.burner.bean;
 
 /**
  * @author esotericman
  */
-public interface AnnotationConst {
-  String BEAN = "org.flmelody.burner.core.annotation.Bean";
-  String PROTOTYPE = "org.flmelody.burner.core.annotation.Prototype";
-  String CONFIGURATION = "org.flmelody.burner.core.annotation.Configuration";
-  String POST_CONSTRUCT = "org.flmelody.burner.core.annotation.PostConstruct";
-  String PRE_DESTROY = "org.flmelody.burner.core.annotation.PreDestroy";
-  String SINGLETON = "jakarta.inject.Singleton";
-  String INJECT = "jakarta.inject.Inject";
-}
+public class BeanDependency {}
