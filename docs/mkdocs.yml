@@ -1,0 +1,35 @@
+site_name: Burner Docs
+repo_url: https://github.com/Flmelody/burner
+repo_name: Flmelody/burner
+#plugins:
+#  - projects:
+#      enabled: true
+theme:
+  name: material
+  features:
+    - navigation.top
+  custom_dir: overrides
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+extra:
+  alternate:
+    - name: English
+      link: /
+      lang: en
+    - name: 中文
+      link: /zh/
+      lang: zh

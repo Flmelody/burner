@@ -1,0 +1,2 @@
+#file: noinspection YAMLSchemaValidation
+INHERIT: ../en/mkdocs.yml
