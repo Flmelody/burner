@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package org.flmelody.burner.bean;
+package org.flmelody.burner.annotation;
 
-import java.util.List;
-import javax.lang.model.element.VariableElement;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 /**
  * @author esotericman
  */
-public class BeanDependency {
-  private final List<VariableElement> variableElements;
-
-  public BeanDependency(List<VariableElement> variableElements) {
-    this.variableElements = variableElements;
-  }
-
-  public List<VariableElement> getVariableElements() {
-    return variableElements;
-  }
-}
+@Documented
+@Retention(RUNTIME)
+@Target(METHOD)
+public @interface PostConstruct {}

@@ -17,13 +17,26 @@
 package org.flmelody.burner.processor;
 
 import com.google.auto.service.AutoService;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
+import javax.lang.model.util.ElementFilter;
+import org.flmelody.burner.bean.BeanDefinition;
+import org.flmelody.burner.bean.BeanElementResolver;
 
 /**
  * @author esotericman
@@ -47,6 +60,28 @@ public class FactoryProcessor extends AbstractProcessor {
 
   @Override
   public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    Set<? extends Element> elementsAnnotatedWithSingleton =
+        roundEnv.getElementsAnnotatedWith(Singleton.class);
+    Set<TypeElement> typeElements = ElementFilter.typesIn(elementsAnnotatedWithSingleton);
+
+    Set<? extends Element> elementsAnnotatedWithInject =
+        roundEnv.getElementsAnnotatedWith(Inject.class);
+    Set<VariableElement> variableElements = ElementFilter.fieldsIn(elementsAnnotatedWithInject);
+    Map<Name, List<VariableElement>> fieldsDependency =
+        variableElements.stream()
+            .collect(
+                Collectors.groupingBy(
+                    variableElement -> variableElement.getEnclosingElement().getSimpleName()));
+
+    BeanElementResolver beanElementResolver = new BeanElementResolver();
+    for (TypeElement typeElement : typeElements) {
+      BeanDefinition beanDefinition =
+          beanElementResolver.resolve(
+              typeElement,
+              fieldsDependency.get(typeElement.getSimpleName()),
+              processingEnv.getMessager());
+    }
+
     return false;
   }
 }

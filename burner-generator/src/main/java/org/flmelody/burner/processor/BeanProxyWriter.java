@@ -16,7 +16,16 @@
 
 package org.flmelody.burner.processor;
 
+import org.flmelody.burner.bean.BeanDefinition;
+
 /**
  * @author esotericman
  */
-public class BeanProxyWriter {}
+public class BeanProxyWriter {
+  private final BeanDefinition beanDefinition;
+
+  public BeanProxyWriter(BeanDefinition beanDefinition) {
+    this.beanDefinition = beanDefinition;
+  }
+
+}

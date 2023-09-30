@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package org.flmelody.burner.bean;
+package org.flmelody.burner.annotation;
+
+import jakarta.inject.Singleton;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author esotericman
  */
-public interface BeanProxy<T> {
-
-  T create(BeanDefinition<T> beanDefinition);
-
-  BeanDefinition<T> beanDefinition();
-}
+@Singleton
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Prototype {}
