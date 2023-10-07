@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":burner-generator"))
     annotationProcessor(project(":burner-generator"))
     implementation("jakarta.inject:jakarta.inject-api:2.0.1")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
@@ -56,4 +57,11 @@ publishing {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    val compilerArgs = options.compilerArgs
+    compilerArgs.add("-verbose")
+    compilerArgs.add("-XprintProcessorInfo")
+    compilerArgs.add("-XprintRounds")
 }

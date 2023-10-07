@@ -9,6 +9,11 @@ repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencies {
     implementation("org.flmelody:reflections:0.10.2")
     implementation("com.squareup:javapoet:1.13.0")
@@ -21,4 +26,10 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    val compilerArgs = options.compilerArgs
+    compilerArgs.add("-XprintProcessorInfo")
+    compilerArgs.add("-XprintRounds")
 }

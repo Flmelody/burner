@@ -16,7 +16,6 @@
 
 package org.flmelody.core.annotation;
 
-import jakarta.inject.Singleton;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,7 +24,6 @@ import java.lang.annotation.Target;
 /**
  * @author esotericman
  */
-@Singleton
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Prototype {}

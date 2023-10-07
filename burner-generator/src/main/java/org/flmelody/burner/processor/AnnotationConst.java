@@ -20,11 +20,11 @@ package org.flmelody.burner.processor;
  * @author esotericman
  */
 public interface AnnotationConst {
-  String BEAN = "org.flmelody.burner.core.annotation.Bean";
-  String PROTOTYPE = "org.flmelody.burner.core.annotation.Prototype";
-  String CONFIGURATION = "org.flmelody.burner.core.annotation.Configuration";
-  String POST_CONSTRUCT = "org.flmelody.burner.core.annotation.PostConstruct";
-  String PRE_DESTROY = "org.flmelody.burner.core.annotation.PreDestroy";
+  //  String BEAN = "org.flmelody.burner.annotation.Bean";
+  String PROTOTYPE = "org.flmelody.burner.annotation.Prototype";
+  //  String CONFIGURATION = "org.flmelody.burner.annotation.Configuration";
+  String POST_CONSTRUCT = "org.flmelody.burner.annotation.PostConstruct";
+  String PRE_DESTROY = "org.flmelody.burner.annotation.PreDestroy";
   String SINGLETON = "jakarta.inject.Singleton";
   String INJECT = "jakarta.inject.Inject";
 }

@@ -23,7 +23,6 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
@@ -35,53 +34,48 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementFilter;
+
 import org.flmelody.burner.bean.BeanDefinition;
 import org.flmelody.burner.bean.BeanElementResolver;
 
 /**
  * @author esotericman
  */
-@SupportedAnnotationTypes({
-  AnnotationConst.BEAN,
-  AnnotationConst.CONFIGURATION,
-  AnnotationConst.PROTOTYPE,
-  AnnotationConst.POST_CONSTRUCT,
-  AnnotationConst.PRE_DESTROY,
-  AnnotationConst.SINGLETON,
-  AnnotationConst.INJECT
-})
-@AutoService(Processor.class)
+@SupportedAnnotationTypes({AnnotationConst.SINGLETON})
+@AutoService(value = Processor.class)
 public class FactoryProcessor extends AbstractProcessor {
 
-  @Override
-  public SourceVersion getSupportedSourceVersion() {
-    return SourceVersion.latestSupported();
-  }
-
-  @Override
-  public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-    Set<? extends Element> elementsAnnotatedWithSingleton =
-        roundEnv.getElementsAnnotatedWith(Singleton.class);
-    Set<TypeElement> typeElements = ElementFilter.typesIn(elementsAnnotatedWithSingleton);
-
-    Set<? extends Element> elementsAnnotatedWithInject =
-        roundEnv.getElementsAnnotatedWith(Inject.class);
-    Set<VariableElement> variableElements = ElementFilter.fieldsIn(elementsAnnotatedWithInject);
-    Map<Name, List<VariableElement>> fieldsDependency =
-        variableElements.stream()
-            .collect(
-                Collectors.groupingBy(
-                    variableElement -> variableElement.getEnclosingElement().getSimpleName()));
-
-    BeanElementResolver beanElementResolver = new BeanElementResolver();
-    for (TypeElement typeElement : typeElements) {
-      BeanDefinition beanDefinition =
-          beanElementResolver.resolve(
-              typeElement,
-              fieldsDependency.get(typeElement.getSimpleName()),
-              processingEnv.getMessager());
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 
-    return false;
-  }
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        Set<? extends Element> elementsAnnotatedWithSingleton =
+                roundEnv.getElementsAnnotatedWith(Singleton.class);
+        Set<TypeElement> typeElements = ElementFilter.typesIn(elementsAnnotatedWithSingleton);
+
+        Set<? extends Element> elementsAnnotatedWithInject =
+                roundEnv.getElementsAnnotatedWith(Inject.class);
+        Set<VariableElement> variableElements = ElementFilter.fieldsIn(elementsAnnotatedWithInject);
+        Map<Name, List<VariableElement>> fieldsDependency =
+                variableElements.stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        variableElement -> variableElement.getEnclosingElement().getSimpleName()));
+
+        BeanElementResolver beanElementResolver = new BeanElementResolver();
+        for (TypeElement typeElement : typeElements) {
+            BeanDefinition beanDefinition =
+                    beanElementResolver.resolve(
+                            typeElement,
+                            fieldsDependency.get(typeElement.getSimpleName()),
+                            processingEnv.getMessager());
+            Class<?> beanClass = beanDefinition.getBeanClass();
+            System.out.println();
+        }
+
+        return false;
+    }
 }
