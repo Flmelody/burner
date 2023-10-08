@@ -16,16 +16,51 @@
 
 package org.flmelody.burner.processor;
 
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeSpec;
 import org.flmelody.burner.bean.BeanDefinition;
+import org.flmelody.burner.bean.BeanFactory;
+
+import javax.lang.model.type.TypeMirror;
+import java.util.List;
+
+import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**
  * @author esotericman
  */
 public class BeanProxyWriter {
-  private final BeanDefinition beanDefinition;
+    private final BeanDefinition beanDefinition;
 
-  public BeanProxyWriter(BeanDefinition beanDefinition) {
-    this.beanDefinition = beanDefinition;
-  }
+    public BeanProxyWriter(BeanDefinition beanDefinition) {
+        this.beanDefinition = beanDefinition;
+    }
 
+
+    public JavaFile generateFile() {
+        var definitionSpec = TypeSpec.classBuilder("$%s$Burner$Proxy".formatted(beanDefinition.getBeanClassName().simpleName()))
+                .addModifiers(PUBLIC)
+                .addMethod(generateMethod())
+                .build();
+        return JavaFile.builder(beanDefinition.getBeanClassName().packageName(), definitionSpec).build();
+    }
+
+    private MethodSpec generateMethod() {
+        List<TypeMirror> constructorParameterTypes = beanDefinition.getConstructorParameterTypes();
+        //
+        return MethodSpec.methodBuilder("create")
+                .addModifiers(PUBLIC)
+                .addParameter(ParameterSpec.builder(BeanFactory.class, "beanFactory").build())
+                .addStatement(CodeBlock.builder()
+                        .add("return")
+                        .add(" new")
+                        .add(" $T", beanDefinition.getBeanClassName())
+                        .add("()")
+                        .build())
+                .returns(beanDefinition.getBeanClassName())
+                .build();
+    }
 }

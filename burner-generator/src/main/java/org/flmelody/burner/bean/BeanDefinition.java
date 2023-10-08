@@ -17,6 +17,7 @@
 package org.flmelody.burner.bean;
 
 import com.squareup.javapoet.ClassName;
+
 import java.util.List;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
@@ -25,40 +26,34 @@ import javax.lang.model.type.TypeMirror;
  * @author esotericman
  */
 public class BeanDefinition {
-  private final TypeElement beanElement;
-  private final Class<?> beanClass;
-  private final ClassName beanClassName;
-  private final List<TypeMirror> constructorParameterTypes;
-  private final BeanDependency beanDependency;
+    private final TypeElement beanElement;
+    private final ClassName beanClassName;
+    private final List<TypeMirror> constructorParameterTypes;
+    private final BeanDependency beanDependency;
 
-  public BeanDefinition(
-      TypeElement beanElement,
-      List<TypeMirror> constructorParameterTypes,
-      BeanDependency beanDependency) {
-    this.beanElement = beanElement;
-    this.beanClass = beanElement.getClass();
-    this.beanClassName = ClassName.get(beanElement);
-    this.constructorParameterTypes = constructorParameterTypes;
-    this.beanDependency = beanDependency;
-  }
+    public BeanDefinition(
+            TypeElement beanElement,
+            List<TypeMirror> constructorParameterTypes,
+            BeanDependency beanDependency) {
+        this.beanElement = beanElement;
+        this.beanClassName = ClassName.get(beanElement);
+        this.constructorParameterTypes = constructorParameterTypes;
+        this.beanDependency = beanDependency;
+    }
 
-  public TypeElement getBeanElement() {
-    return beanElement;
-  }
+    public TypeElement getBeanElement() {
+        return beanElement;
+    }
 
-  public Class<?> getBeanClass() {
-    return beanClass;
-  }
+    public ClassName getBeanClassName() {
+        return beanClassName;
+    }
 
-  public ClassName getBeanClassName() {
-    return beanClassName;
-  }
+    public List<TypeMirror> getConstructorParameterTypes() {
+        return constructorParameterTypes;
+    }
 
-  public List<TypeMirror> getConstructorParameterTypes() {
-    return constructorParameterTypes;
-  }
-
-  public BeanDependency getBeanDependency() {
-    return beanDependency;
-  }
+    public BeanDependency getBeanDependency() {
+        return beanDependency;
+    }
 }

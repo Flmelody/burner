@@ -17,9 +17,11 @@
 package org.flmelody.burner.processor;
 
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.JavaFile;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,6 +39,8 @@ import javax.lang.model.util.ElementFilter;
 
 import org.flmelody.burner.bean.BeanDefinition;
 import org.flmelody.burner.bean.BeanElementResolver;
+
+import static javax.tools.Diagnostic.Kind.ERROR;
 
 /**
  * @author esotericman
@@ -72,10 +76,17 @@ public class FactoryProcessor extends AbstractProcessor {
                             typeElement,
                             fieldsDependency.get(typeElement.getSimpleName()),
                             processingEnv.getMessager());
-            Class<?> beanClass = beanDefinition.getBeanClass();
-            System.out.println();
+            writeProxy(beanDefinition);
         }
-
         return false;
+    }
+
+    private void writeProxy(BeanDefinition beanDefinition) {
+        JavaFile javaFile = new BeanProxyWriter(beanDefinition).generateFile();
+        try {
+            javaFile.writeTo(processingEnv.getFiler());
+        } catch (IOException e) {
+            processingEnv.getMessager().printMessage(ERROR, "Failed to write proxy %s".formatted(javaFile));
+        }
     }
 }
