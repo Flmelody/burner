@@ -28,6 +28,7 @@ import javax.lang.model.type.TypeMirror;
 import java.util.List;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
 
 /**
  * @author esotericman
@@ -52,7 +53,7 @@ public class BeanProxyWriter {
         List<TypeMirror> constructorParameterTypes = beanDefinition.getConstructorParameterTypes();
         //
         return MethodSpec.methodBuilder("create")
-                .addModifiers(PUBLIC)
+                .addModifiers(PUBLIC, STATIC)
                 .addParameter(ParameterSpec.builder(BeanFactory.class, "beanFactory").build())
                 .addStatement(CodeBlock.builder()
                         .add("return")

@@ -1,6 +1,7 @@
-site_name: Burner Docs
+site_name: Burner文档
 repo_url: https://github.com/Flmelody/burner
 repo_name: Flmelody/burner
+#笔者太穷无力支付每月15美元的巨款 所以暂时无法使用这个插件 等待Blockpaprika目标达成
 #plugins:
 #  - projects:
 #      enabled: true
@@ -8,8 +9,9 @@ theme:
   name: material
   features:
     - navigation.top
+    - content.code.copy
   custom_dir: overrides
-  language: en
+  language: zh
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -24,12 +26,27 @@ theme:
         icon: material/weather-night
         name: Switch to light mode
   icon:
+    logo: logo
     repo: fontawesome/brands/github
+    edit: material/file-edit-outline
 extra:
   alternate:
-    - name: English
-      link: /
-      lang: en
     - name: 中文
-      link: /zh/
+      link: /
       lang: zh
+    - name: English
+      link: /en/
+      lang: en
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+# Page tree
+nav:
+  - 前言:
+      # [icon: material/book-open-outline]
+      - 关于Burner: preface/about-burner.md
+      - 为什么是Burner: preface/why-burner.md
+  - 快速上手:
+      # [icon: material/book-open-outline]
+      - 添加依赖: quick-start/dependency.md
